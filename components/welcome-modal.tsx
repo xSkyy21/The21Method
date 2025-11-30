@@ -67,7 +67,7 @@ export function WelcomeModal({ open, onComplete }: WelcomeModalProps) {
       <DialogContent className="sm:max-w-md bg-card/95 backdrop-blur-sm border-primary/20">
         <DialogHeader>
           <DialogTitle className="text-center text-foreground text-xl">
-            Bienvenue au WebaZio Blackjack Trainer
+            Bienvenue au Blackjack Trainer Pro
           </DialogTitle>
         </DialogHeader>
 

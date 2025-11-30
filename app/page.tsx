@@ -1,388 +1,303 @@
 "use client"
 
-import { motion } from "framer-motion"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { ArrowRight, Shield, Brain, Target, Zap, CheckCircle, Play } from "lucide-react"
-import { useState } from "react"
-
-const floatingCards = [
-  { suit: "♠", rank: "A", delay: 0 },
-  { suit: "♥", rank: "K", delay: 0.5 },
-  { suit: "♦", rank: "Q", delay: 1 },
-  { suit: "♣", rank: "J", delay: 1.5 },
-]
-
-const features = [
-  {
-    icon: Brain,
-    title: "Stratégie de base",
-    description: "Joue mathématiquement optimal selon ta main et la carte visible du croupier.",
-  },
-  {
-    icon: Target,
-    title: "Comptage Hi-Lo",
-    description: "Suis la balance de cartes hautes/basses pour estimer l'avantage.",
-  },
-  {
-    icon: Zap,
-    title: "Pratique guidée",
-    description: "Timer, quiz de comptage, et conseils visuels sur l'action idéale.",
-  },
-]
-
-const rules = [
-  "S17/H17 configurable",
-  "Double 9-11 / 10-11 / tous",
-  "Split & re-split",
-  "As split 1 carte",
-  "Assurance 2:1",
-  "FR no-hole ou US peek",
-]
-
-const faqItems = [
-  {
-    question: "Le comptage est-il légal ?",
-    answer:
-      "Oui dans la plupart des pays tant que tu n'utilises pas d'appareil. C'est une compétence mentale légitime.",
-  },
-  {
-    question: "S17 vs H17 ?",
-    answer: "S17 : croupier reste sur 17 souple; H17 : il tire sur 17 souple. S17 est plus favorable au joueur.",
-  },
-  {
-    question: "Pourquoi le 3:2 est mieux que 6:5 ?",
-    answer:
-      "Le paiement 3:2 pour Blackjack donne 1,5x ta mise, tandis que 6:5 ne donne que 1,2x. Évite les tables 6:5.",
-  },
-  {
-    question: "No-hole (France) ?",
-    answer: "Le croupier ne vérifie pas le Blackjack avant la fin. Différent des règles US où il 'peek' immédiatement.",
-  },
-]
+import { Card } from "@/components/ui/card"
+import { 
+  Target, 
+  Trophy, 
+  History, 
+  BookOpen, 
+  Zap, 
+  Shield, 
+  Users, 
+  TrendingUp,
+  Play,
+  Star,
+  Award,
+  CheckCircle,
+  ArrowRight,
+  Crown,
+  BarChart3,
+  Brain,
+  Clock
+} from "lucide-react"
+import { CasinoHero } from "@/components/casino-hero"
+import { BigWins } from "@/components/big-wins"
+import Image from "next/image"
+import { useEffect, useState } from "react"
 
 export default function HomePage() {
-  const [remainingDecks, setRemainingDecks] = useState(4.5)
-  const runningCount = 8
-  const trueCount = Math.round((runningCount / remainingDecks) * 10) / 10
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+
+  // Valeurs fixes pour les particules pour éviter l'erreur d'hydratation
+  const particleData = [
+    { left: "15%", delay: "0.5s", duration: "6s" },
+    { left: "25%", delay: "1.2s", duration: "7s" },
+    { left: "35%", delay: "0.8s", duration: "8s" },
+    { left: "45%", delay: "1.5s", duration: "6.5s" },
+    { left: "55%", delay: "0.3s", duration: "7.5s" },
+    { left: "65%", delay: "1.8s", duration: "6.8s" },
+    { left: "75%", delay: "0.7s", duration: "8.2s" },
+    { left: "85%", delay: "1.1s", duration: "7.2s" },
+    { left: "95%", delay: "0.9s", duration: "6.3s" },
+    { left: "5%", delay: "1.6s", duration: "7.8s" },
+    { left: "12%", delay: "0.4s", duration: "8.5s" },
+    { left: "22%", delay: "1.3s", duration: "6.7s" },
+    { left: "32%", delay: "0.6s", duration: "7.9s" },
+    { left: "42%", delay: "1.7s", duration: "6.4s" },
+    { left: "52%", delay: "0.2s", duration: "8.1s" },
+    { left: "62%", delay: "1.4s", duration: "7.1s" },
+    { left: "72%", delay: "0.1s", duration: "6.9s" },
+    { left: "82%", delay: "1.9s", duration: "7.6s" },
+    { left: "92%", delay: "0.8s", duration: "8.3s" },
+    { left: "2%", delay: "1.0s", duration: "6.6s" }
+  ]
+
+  const features = [
+    {
+      icon: Target,
+      title: "Stratégie de Base",
+      description: "Apprenez et maîtrisez la stratégie optimale pour chaque situation de jeu",
+      color: "from-green-500 to-green-600"
+    },
+    {
+      icon: BarChart3,
+      title: "Comptage Hi-Lo",
+      description: "Entraînez-vous au comptage de cartes avec le système Hi-Lo le plus populaire",
+      color: "from-yellow-500 to-yellow-600"
+    },
+    {
+      icon: Brain,
+      title: "Quiz Interactifs",
+      description: "Testez vos connaissances avec des quiz adaptatifs et progressifs",
+      color: "from-red-500 to-red-600"
+    },
+    {
+      icon: Shield,
+      title: "Provably Fair",
+      description: "Système de génération de cartes vérifiable et transparent",
+      color: "from-slate-500 to-slate-600"
+    },
+    {
+      icon: Users,
+      title: "Multi-Sièges",
+      description: "Jouez sur 1 à 4 sièges simultanément pour un entraînement intensif",
+      color: "from-casino-gold to-casino-gold-dark"
+    },
+    {
+      icon: TrendingUp,
+      title: "Statistiques Avancées",
+      description: "Suivez vos progrès avec des métriques détaillées et des graphiques",
+      color: "from-pink-500 to-rose-600"
+    }
+  ]
+
+  const stats = [
+    { label: "Joueurs Actifs", value: "2,847", icon: Users },
+    { label: "Mains Jouées", value: "1.2M+", icon: Target },
+    { label: "Heures d'Entraînement", value: "45K+", icon: Clock },
+    { label: "Note Moyenne", value: "4.9/5", icon: Star }
+  ]
 
   return (
-    <div className="min-h-screen webazio-bg pt-16">
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Floating Cards Animation */}
-        <div className="absolute inset-0 pointer-events-none">
-          {floatingCards.map((card, index) => (
-            <motion.div
-              key={index}
-              className="absolute w-16 h-24 bg-white rounded-lg shadow-lg flex items-center justify-center text-2xl font-bold"
+    <div className="min-h-screen">
+      {/* Casino Particles Effect - Compatible SSR */}
+      {isClient && (
+        <div className="casino-particles">
+          {particleData.map((particle, i) => (
+            <div
+              key={i}
+              className="casino-particle"
               style={{
-                left: `${20 + index * 20}%`,
-                top: `${30 + (index % 2) * 40}%`,
+                left: particle.left,
+                animationDelay: particle.delay,
+                animationDuration: particle.duration
               }}
-              initial={{ opacity: 0, y: 100, rotate: -10 }}
-              animate={{
-                opacity: [0, 1, 1, 0],
-                y: [100, -20, -40, -100],
-                rotate: [-10, 5, -5, 10],
-              }}
-              transition={{
-                duration: 4,
-                delay: card.delay,
-                repeat: Number.POSITIVE_INFINITY,
-                repeatDelay: 2,
-              }}
-            >
-              <span className={card.suit === "♥" || card.suit === "♦" ? "text-red-500" : "text-black"}>
-                {card.rank}
-                {card.suit}
-              </span>
-            </motion.div>
+            />
           ))}
         </div>
+      )}
 
-        <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 text-balance">
-              Apprends à battre le{" "}
-              <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent webazio-glow">
-                Blackjack
-              </span>{" "}
-              comme un pro
-            </h1>
-            <p className="text-xl md:text-2xl text-white/80 mb-8 text-pretty max-w-3xl mx-auto">
-              Stratégie de base, comptage Hi-Lo, sabot prouvé équitable. Entraîne-toi avec un croupier automatique et
-              une aide visuelle.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="webazio-button-primary text-lg px-8 py-4">
-                <Link href="/entrainement">
-                  <Play className="mr-2 h-5 w-5" />
-                  S'entraîner maintenant
-                </Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="text-lg px-8 py-4 bg-transparent border-accent/50 hover:border-accent"
-              >
-                <Link href="/histoire">
-                  Histoire du Blackjack
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-            </div>
-          </motion.div>
+      {/* Hero Section - Plus aéré */}
+      <section className="relative pt-8 pb-32 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Casino Hero avec images */}
+          <div className="mb-24 smooth-fade-in">
+            <CasinoHero />
+          </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-20 border-t border-white/10">
-        <div className="max-w-6xl mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Comment ça marche</h2>
-            <p className="text-xl text-white/70 max-w-2xl mx-auto">
-              Trois piliers pour maîtriser le Blackjack professionnel
-            </p>
-          </motion.div>
+      {/* Titre principal - Section séparée */}
+      <section className="py-20 bg-gradient-to-br from-black/30 to-gray-800/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center smooth-slide-up">
+            <h1 className="text-5xl md:text-7xl font-bold mb-8 font-display">
+              <span className="casino-neon-gold">
+                Blackjack
+              </span>
+              <br />
+              <span className="casino-neon-gold-light">Trainer Pro</span>
+            </h1>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <Card className="webazio-card h-full hover:scale-105 transition-transform duration-300">
-                  <CardHeader>
-                    <feature.icon className="h-12 w-12 text-primary mb-4" />
-                    <CardTitle className="text-xl text-white">{feature.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-white/70">{feature.description}</CardDescription>
-                  </CardContent>
-                </Card>
-              </motion.div>
+            <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed">
+              Maîtrisez l'art du Blackjack avec le meilleur outil d'entraînement. 
+              Stratégie de base, comptage de cartes, et bien plus encore.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
+              <Link href="/entrainement">
+                <Button className="casino-button-gold py-4 px-8 rounded-xl text-lg">
+                  <Play className="w-5 h-5 mr-2" />
+                  Commencer l'entraînement
+                </Button>
+              </Link>
+              
+              <Link href="/apprentissage">
+                <Button className="casino-button-light py-4 px-8 rounded-xl text-lg">
+                  <Brain className="w-5 h-5 mr-2" />
+                  Apprendre le comptage
+                </Button>
+              </Link>
+              
+              <Link href="/connexion">
+                <Button className="casino-button-dark py-4 px-8 rounded-xl text-lg">
+                  <Users className="w-5 h-5 mr-2" />
+                  Créer un compte
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section - Plus aérée */}
+      <section className="py-20 bg-gradient-to-br from-gray-900/50 to-gray-800/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              <span className="casino-neon-gold-light">Statistiques</span> Impressionnantes
+            </h2>
+            <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+              Rejoignez une communauté de joueurs passionnés et motivés
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
+            {stats.map((stat, index) => (
+              <div key={index} className="text-center casino-card p-8 rounded-2xl smooth-fade-in float-gentle" style={{ animationDelay: `${index * 0.1}s` }}>
+                <div className="flex justify-center mb-4">
+                  <div className="w-20 h-20 bg-gradient-to-br from-casino-gold to-casino-gold-dark rounded-2xl flex items-center justify-center shadow-xl chip-stack glow-pulse">
+                    {index === 0 ? (
+                      <Image
+                        src="/images/casino/playing-card-symbols-clubs.png"
+                        alt="Symbole trèfle 3D"
+                        width={48}
+                        height={48}
+                        className="object-contain"
+                      />
+                    ) : index === 1 ? (
+                      <Image
+                        src="/images/casino/casino-game.png"
+                        alt="Dé de casino"
+                        width={40}
+                        height={40}
+                        className="object-contain"
+                      />
+                    ) : (
+                      <stat.icon className="w-8 h-8 text-casino-black" />
+                    )}
+                  </div>
+                </div>
+                <div className="text-3xl md:text-4xl font-bold text-casino-gold-light mb-2">{stat.value}</div>
+                <div className="text-gray-300 text-sm font-medium">{stat.label}</div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Rules Section */}
-      <section className="py-20 border-t border-white/10">
-        <div className="max-w-6xl mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Règles configurables</h2>
-            <p className="text-xl text-white/70 max-w-2xl mx-auto">Adapte ton entraînement aux variantes de casino</p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <div className="grid grid-cols-2 gap-4">
-                {rules.map((rule, index) => (
-                  <div key={index} className="flex items-center space-x-2">
-                    <CheckCircle className="h-5 w-5 text-accent flex-shrink-0" />
-                    <span className="text-white/80">{rule}</span>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <Card className="webazio-card">
-                <CardHeader>
-                  <div className="flex items-center space-x-2">
-                    <Shield className="h-6 w-6 text-accent" />
-                    <Badge variant="secondary" className="bg-accent/20 text-accent">
-                      Sabot prouvé équitable
-                    </Badge>
-                  </div>
-                  <CardTitle className="text-white">Preuve d'équité</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-white/70">
-                    Avant chaque sabot, nous publions le hash SHA-256 de l'ordre des cartes. À la fin, nous révélons
-                    l'ordre + seeds pour vérification indépendante.
-                  </CardDescription>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Counting Demo Section */}
-      <section className="py-20 border-t border-white/10">
-        <div className="max-w-6xl mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Comptage Hi-Lo</h2>
-            <p className="text-xl text-white/70 max-w-2xl mx-auto">
-              Comprends la différence entre Running Count et True Count
+      {/* Features Section - Plus aérée */}
+      <section className="py-24 bg-gradient-to-br from-gray-900/60 to-gray-800/60">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              Fonctionnalités <span className="casino-neon-gold-light">Avancées</span>
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+              Tout ce dont vous avez besoin pour devenir un expert du Blackjack
             </p>
-          </motion.div>
+          </div>
 
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <Card className="webazio-card">
-                <CardHeader>
-                  <CardTitle className="text-white">Système Hi-Lo</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="text-white/80">
-                    <p className="mb-2">
-                      <strong>2–6 = +1</strong> (cartes basses)
-                    </p>
-                    <p className="mb-2">
-                      <strong>7–9 = 0</strong> (neutres)
-                    </p>
-                    <p className="mb-4">
-                      <strong>10/J/Q/K/A = −1</strong> (cartes hautes)
-                    </p>
-                    <p className="text-accent">
-                      <strong>True Count = Running Count ÷ Paquets restants</strong>
-                    </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {features.map((feature, index) => (
+              <Card key={index} className="casino-card p-8 smooth-fade-in hover:scale-105 transition-transform duration-300" style={{ animationDelay: `${index * 0.2}s` }}>
+                <div className="text-center">
+                  <div className="w-24 h-24 bg-gradient-to-br from-casino-gold to-casino-gold-dark rounded-2xl flex items-center justify-center shadow-xl mb-8 chip-stack glow-pulse mx-auto">
+                    <feature.icon className="w-10 h-10 text-casino-black" />
                   </div>
-                  <div className="bg-primary/10 p-4 rounded-lg">
-                    <p className="text-white/80 text-sm">
-                      <strong>Exemple :</strong> A + 4 = 5 / 15 (souple)
-                    </p>
-                  </div>
-                </CardContent>
+                  <h3 className="text-2xl font-bold text-casino-gold-light mb-4">{feature.title}</h3>
+                  <p className="text-gray-300 leading-relaxed text-lg">{feature.description}</p>
+                </div>
               </Card>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <Card className="webazio-card">
-                <CardHeader>
-                  <CardTitle className="text-white">Calculateur interactif</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <label className="text-white/80 text-sm">Paquets restants: {remainingDecks}</label>
-                    <input
-                      type="range"
-                      min={1}
-                      max={6}
-                      step={0.5}
-                      value={remainingDecks}
-                      onChange={(e) => setRemainingDecks(Number(e.target.value))}
-                      className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer"
-                    />
-                  </div>
-                  <div className="grid grid-cols-2 gap-4 text-center">
-                    <div className="bg-secondary/20 p-3 rounded-lg">
-                      <div className="text-2xl font-bold text-white">{runningCount}</div>
-                      <div className="text-sm text-white/70">Running Count</div>
-                    </div>
-                    <div className="bg-accent/20 p-3 rounded-lg">
-                      <div className="text-2xl font-bold text-accent">{trueCount}</div>
-                      <div className="text-sm text-white/70">True Count</div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 border-t border-white/10">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Prêt à commencer ?</h2>
-            <p className="text-xl text-white/70 mb-8">Lance une table jusqu'à 4 sièges et commence à compter.</p>
-            <Button asChild size="lg" className="webazio-button-primary text-lg px-12 py-4">
-              <Link href="/entrainement">
-                <Play className="mr-2 h-5 w-5" />
-                S'entraîner maintenant
-              </Link>
-            </Button>
-          </motion.div>
+      {/* Big Wins Section - Plus aérée */}
+      <section className="py-24 bg-gradient-to-br from-gray-900/80 to-gray-800/80">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <BigWins />
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section className="py-20 border-t border-white/10">
-        <div className="max-w-4xl mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Questions fréquentes</h2>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <Accordion type="single" collapsible className="space-y-4">
-              {faqItems.map((item, index) => (
-                <AccordionItem key={index} value={`item-${index}`} className="webazio-card border-0 px-6 py-2">
-                  <AccordionTrigger className="text-white hover:text-primary text-left">
-                    {item.question}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-white/70 pt-2">{item.answer}</AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </motion.div>
+      {/* CTA Section - Plus aérée */}
+      <section className="py-24 bg-gradient-to-br from-black/40 to-gray-800/40">
+        <div className="max-w-5xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+          <h2 className="text-4xl md:text-6xl font-bold mb-8">
+            Prêt à <span className="casino-neon-gold-light">dominer</span> le Blackjack ?
+          </h2>
+          <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
+            Rejoignez des milliers de joueurs qui ont déjà amélioré leurs compétences avec Blackjack Trainer Pro
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <Link href="/entrainement">
+              <Button className="casino-button-gold py-5 px-10 rounded-xl text-xl jackpot-effect">
+                <Play className="w-6 h-6 mr-3" />
+                Commencer maintenant
+              </Button>
+            </Link>
+            
+            <Link href="/histoire">
+              <Button className="casino-button-light py-5 px-10 rounded-xl text-xl">
+                <BookOpen className="w-6 h-6 mr-3" />
+                Découvrir l'histoire
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
+
+      {/* Footer - Plus aéré */}
+      <footer className="bg-gradient-to-br from-black to-gray-900 border-t border-casino-gold/30 py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <p className="text-slate-300 mb-6 casino-neon-gold text-lg">
+              © 2024 Blackjack Trainer Pro. Tous droits réservés.
+            </p>
+            <p className="text-slate-400 text-base">
+              Édité et développé par <span className="casino-neon-gold-light font-medium">WebaZio</span> mon agence web
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }

@@ -55,6 +55,8 @@ export interface Settings {
   baseBet: number
   bankroll: number
   playerName: string // Added player name field
+  dealSpeed: number // Délai en millisecondes entre chaque carte distribuée
+  soundEnabled: boolean // Toggle pour les effets sonores
 }
 
 export type Phase = "INIT" | "DEAL" | "INSURANCE" | "PLAYER" | "DEALER" | "RESOLVE" | "END"

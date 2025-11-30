@@ -1,0 +1,207 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  username  String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Profil utilisateur
+  displayName String?
+  avatar      String?
+  bio         String?
+  
+  // Statistiques de jeu
+  totalHandsPlayed    Int     @default(0)
+  totalWinnings       Float   @default(0)
+  totalLosses         Float   @default(0)
+  bestWinStreak       Int     @default(0)
+  currentWinStreak    Int     @default(0)
+  averageBet          Float   @default(0)
+  
+  // Comptage de cartes
+  totalRunningCount   Int     @default(0)
+  totalTrueCount      Float   @default(0)
+  averageTrueCount    Float   @default(0)
+  maxTrueCount        Int     @default(0)
+  
+  // Stratégie
+  basicStrategyAccuracy Float @default(0)
+  totalDecisions        Int   @default(0)
+  correctDecisions      Int   @default(0)
+  
+  // Sessions de jeu
+  sessions Session[]
+  
+  // Classements
+  rankings Ranking[]
+  
+  // Réalisations
+  achievements Achievement[]
+  
+  // Paramètres
+  settings UserSettings?
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  startedAt DateTime @default(now())
+  endedAt   DateTime?
+  
+  // Statistiques de session
+  handsPlayed        Int     @default(0)
+  winnings           Float   @default(0)
+  losses             Float   @default(0)
+  runningCount       Int     @default(0)
+  trueCount          Float   @default(0)
+  maxTrueCount       Int     @default(0)
+  
+  // Stratégie
+  decisionsMade      Int     @default(0)
+  correctDecisions   Int     @default(0)
+  
+  // Configuration
+  seatsCount         Int     @default(1)
+  rules              String  // JSON string des règles utilisées
+  bankroll           Float   @default(25000)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Ranking {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Type de classement
+  type      RankingType
+  
+  // Score et position
+  score     Float
+  position  Int
+  
+  // Métadonnées
+  period    RankingPeriod @default(ALL_TIME)
+  updatedAt DateTime      @default(now())
+  
+  @@unique([userId, type, period])
+}
+
+model Achievement {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Type d'achievement
+  type        AchievementType
+  name        String
+  description String
+  icon        String
+  
+  // Progression
+  progress    Int     @default(0)
+  maxProgress Int
+  completed   Boolean @default(false)
+  
+  // Récompenses
+  points      Int     @default(0)
+  
+  unlockedAt  DateTime?
+  createdAt   DateTime @default(now())
+  
+  @@unique([userId, type])
+}
+
+model UserSettings {
+  id                    String @id @default(cuid())
+  userId                String @unique
+  user                  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Interface
+  theme                 String  @default("dark")
+  soundEnabled          Boolean @default(true)
+  soundVolume           Float   @default(0.7)
+  
+  // Jeu
+  defaultSeats          Int     @default(1)
+  defaultBankroll       Float   @default(25000)
+  basicAdviceEnabled    Boolean @default(true)
+  autoAdvance           Boolean @default(true)
+  
+  // Comptage
+  showMyCount           Boolean @default(false)
+  countDisplayMode      String  @default("both") // "running", "true", "both"
+  
+  // Notifications
+  emailNotifications    Boolean @default(false)
+  achievementAlerts     Boolean @default(true)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum RankingType {
+  TOTAL_WINNINGS
+  WIN_RATE
+  BASIC_STRATEGY_ACCURACY
+  AVERAGE_TRUE_COUNT
+  MAX_TRUE_COUNT
+  TOTAL_HANDS_PLAYED
+  BEST_WIN_STREAK
+}
+
+enum RankingPeriod {
+  DAILY
+  WEEKLY
+  MONTHLY
+  ALL_TIME
+}
+
+enum AchievementType {
+  FIRST_HAND
+  FIRST_WIN
+  FIRST_BLACKJACK
+  FIRST_SPLIT
+  FIRST_DOUBLE
+  FIRST_INSURANCE
+  FIRST_COUNTING_SESSION
+  BASIC_STRATEGY_MASTER
+  COUNTING_MASTER
+  HIGH_ROLLER
+  WIN_STREAK_5
+  WIN_STREAK_10
+  WIN_STREAK_20
+  TRUE_COUNT_5
+  TRUE_COUNT_10
+  TRUE_COUNT_15
+  HANDS_100
+  HANDS_500
+  HANDS_1000
+  HANDS_5000
+  PROFIT_1000
+  PROFIT_5000
+  PROFIT_10000
+  PROFIT_50000
+  SESSIONS_10
+  SESSIONS_50
+  SESSIONS_100
+}

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
 export const metadata: Metadata = {
-  title: "Classement - WebaZio Blackjack Trainer",
+  title: "Classement - Blackjack Trainer Pro",
   description: "Tableau de classement des joueurs - Fonctionnalité à venir",
 }
 

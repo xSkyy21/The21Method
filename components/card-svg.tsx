@@ -2,8 +2,6 @@
 
 import type React from "react"
 
-import { motion } from "framer-motion"
-
 interface CardSvgProps {
   rank: string
   suit: "S" | "H" | "D" | "C"
@@ -29,39 +27,36 @@ const suitColors = {
 export function CardSvg({ rank, suit, faceDown = false, className = "", style }: CardSvgProps) {
   if (faceDown) {
     return (
-      <motion.div
+      <div
         className={`relative w-16 h-24 ${className}`}
         style={style}
-        initial={{ rotateY: 0 }}
-        animate={{ rotateY: 0 }}
-        transition={{ duration: 0.3 }}
       >
         <svg width="100%" height="100%" viewBox="0 0 64 96" className="drop-shadow-md">
           {/* Card background */}
-          <rect x="2" y="2" width="60" height="92" rx="6" ry="6" fill="#AA71F3" stroke="#564B64" strokeWidth="2" />
+          <rect x="2" y="2" width="60" height="92" rx="6" ry="6" fill="#d4af37" stroke="#2a2a2a" strokeWidth="2" />
 
           {/* WebaZio pattern */}
           <defs>
             <pattern id="webazio-pattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-              <circle cx="10" cy="10" r="2" fill="#22DFF2" opacity="0.3" />
+              <circle cx="10" cy="10" r="2" fill="#d4af37" opacity="0.3" />
             </pattern>
           </defs>
           <rect x="6" y="6" width="52" height="84" rx="3" fill="url(#webazio-pattern)" />
 
-          {/* WebaZio logo text */}
+          {/* The21Method logo text */}
           <text
             x="32"
             y="50"
             textAnchor="middle"
-            fontSize="8"
+            fontSize="7"
             fill="#FFFFFF"
             fontWeight="bold"
             transform="rotate(-45 32 50)"
           >
-            WebaZio
+            The21Method
           </text>
         </svg>
-      </motion.div>
+      </div>
     )
   }
 
@@ -70,16 +65,13 @@ export function CardSvg({ rank, suit, faceDown = false, className = "", style }:
   const suitColor = suitColors[suit]
 
   return (
-    <motion.div
+    <div
       className={`relative w-16 h-24 ${className}`}
       style={style}
-      initial={{ rotateY: 180 }}
-      animate={{ rotateY: 0 }}
-      transition={{ duration: 0.3 }}
     >
       <svg width="100%" height="100%" viewBox="0 0 64 96" className="drop-shadow-md">
         {/* Card background */}
-        <rect x="2" y="2" width="60" height="92" rx="6" ry="6" fill="#FFFFFF" stroke="#564B64" strokeWidth="2" />
+        <rect x="2" y="2" width="60" height="92" rx="6" ry="6" fill="#FFFFFF" stroke="#2a2a2a" strokeWidth="2" />
 
         {/* Top left rank and suit */}
         <text x="8" y="16" fontSize="12" fontWeight="bold" fill={suitColor} textAnchor="start">
@@ -109,7 +101,7 @@ export function CardSvg({ rank, suit, faceDown = false, className = "", style }:
         <text x="56" y="76" fontSize="10" fill={suitColor} textAnchor="end" transform="rotate(180 56 76)">
           {suitSymbol}
         </text>
-      </svg>
-    </motion.div>
+              </svg>
+    </div>
   )
 }

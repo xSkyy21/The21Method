@@ -108,7 +108,7 @@ export function StrategyDrawer() {
       case "D":
         return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30"
       case "DIV":
-        return "bg-blue-500/20 text-blue-400 border-blue-500/30"
+        return "bg-casino-gold/20 text-casino-gold border-casino-gold/30"
       default:
         return "bg-muted/20 text-muted-foreground border-muted/30"
     }

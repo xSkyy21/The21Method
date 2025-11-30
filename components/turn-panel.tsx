@@ -159,33 +159,34 @@ export function TurnPanel() {
   const displayEvents = showFullTimeline ? queue.slice(-50) : queue.slice(-5)
 
   return (
-    <Card className="webazio-card p-4 space-y-4">
+    <Card className="webazio-card p-3 sm:p-4 space-y-3 sm:space-y-4">
       <div>
-        <h3 className="font-bold text-lg mb-2 text-foreground flex items-center gap-2">
-          <Clock className="w-5 h-5 text-primary" />
-          Tour & Timers
+        <h3 className="font-bold text-base sm:text-lg mb-2 text-foreground flex items-center gap-2">
+          <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+          <span className="hidden sm:inline">Tour & Timers</span>
+          <span className="sm:hidden">Tour</span>
         </h3>
 
-        <div className="space-y-3">
-          <div className="p-3 bg-primary/10 rounded-lg border border-primary/20">
-            <div className="text-sm text-muted-foreground flex items-center gap-1">
-              <User className="w-4 h-4" />
+        <div className="space-y-2 sm:space-y-3">
+          <div className="p-2 sm:p-3 bg-primary/10 rounded-lg border border-primary/20">
+            <div className="text-xs sm:text-sm text-muted-foreground flex items-center gap-1">
+              <User className="w-3 h-3 sm:w-4 sm:h-4" />
               Maintenant:
             </div>
-            <div className="font-semibold text-foreground">{getCurrentPlayerInfo()}</div>
+            <div className="font-semibold text-foreground text-sm sm:text-base">{getCurrentPlayerInfo()}</div>
           </div>
 
           {phase === "PLAYER" && currentTurn && (
-            <div className="p-4 bg-accent/10 rounded-lg border border-accent/20">
-              <div className="text-sm text-muted-foreground mb-2">Décision dans:</div>
-              <div className="flex items-center justify-center">{getTimerDisplay()}</div>
+            <div className="p-3 sm:p-4 bg-accent/10 rounded-lg border border-accent/20">
+              <div className="text-xs sm:text-sm text-muted-foreground mb-2">Décision dans:</div>
+              <div className="flex items-center justify-center scale-75 sm:scale-100">{getTimerDisplay()}</div>
               {isUrgent && (
                 <div
                   className={`text-xs mt-2 font-medium text-center flex items-center justify-center gap-1 ${
                     isCritical ? "text-destructive animate-pulse" : "text-yellow-400"
                   }`}
                 >
-                  <AlertTriangle className="w-3 w-3" />
+                  <AlertTriangle className="w-3 h-3" />
                   {isCritical ? "URGENT !" : "Temps presque écoulé !"}
                 </div>
               )}
@@ -193,12 +194,12 @@ export function TurnPanel() {
           )}
 
           {getNextPlayerInfo() && (
-            <div className="p-3 bg-secondary/10 rounded-lg border border-secondary/20">
-              <div className="text-sm text-muted-foreground flex items-center gap-1">
-                <Users className="w-4 h-4" />
+            <div className="p-2 sm:p-3 bg-secondary/10 rounded-lg border border-secondary/20">
+              <div className="text-xs sm:text-sm text-muted-foreground flex items-center gap-1">
+                <Users className="w-3 h-3 sm:w-4 sm:h-4" />
                 Ensuite:
               </div>
-              <div className="font-semibold text-foreground">{getNextPlayerInfo()}</div>
+              <div className="font-semibold text-foreground text-sm sm:text-base">{getNextPlayerInfo()}</div>
             </div>
           )}
         </div>
@@ -220,8 +221,8 @@ export function TurnPanel() {
 
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h4 className="font-semibold text-foreground flex items-center gap-2">
-            <History className="w-4 h-4 text-primary" />
+          <h4 className="font-semibold text-foreground flex items-center gap-2 text-sm sm:text-base">
+            <History className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
             Timeline
             {queue.length > 0 && (
               <Badge variant="outline" className="text-xs">
@@ -252,8 +253,8 @@ export function TurnPanel() {
         </div>
 
         <div
-          className={`space-y-1 overflow-y-auto text-sm transition-all duration-300 ${
-            showFullTimeline ? "max-h-80" : "max-h-32"
+          className={`space-y-1 overflow-y-auto text-xs sm:text-sm transition-all duration-300 ${
+            showFullTimeline ? "max-h-60 sm:max-h-80" : "max-h-24 sm:max-h-32"
           }`}
         >
           {displayEvents.length === 0 ? (
@@ -266,7 +267,7 @@ export function TurnPanel() {
                 const priority = getEventPriority(event.label)
                 return (
                   <div
-                    key={event.ts + index}
+                    key={`${event.ts}-${index}-${event.label?.slice(0, 10)}`}
                     className="flex items-start gap-2 p-2 bg-muted/20 rounded border border-muted/30 hover:bg-muted/30 transition-colors"
                   >
                     <div className="text-xs text-muted-foreground font-mono min-w-[60px]">
